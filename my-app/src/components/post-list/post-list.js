@@ -1,29 +1,26 @@
 import React from 'react';
+
 import PostListItem from '../post-list-item';
-import './post-list.css';
-const PostList = ({posts}) =>{
-    
-    
+import { ListGroup} from 'reactstrap';
+import './post-list.css'
 
-    const elements=posts.map((item)=>{
-        if ( typeof item === 'object' && isEmpty(item) ){
-            const{id,...itemProps}= item;
+const PostList = ({posts,onDelete,onToggleImportant,onToggleLiked}) => {
 
-        
-        return(
-           
-            <li  key={id}className="list-group-item">
-                <PostListItem 
-                  {...itemProps}
-              
-                />
-            </li>
-            
-        )
-    }
-    
-        
+    const elements = posts.map( (item) => {
+        //if ( typeof item === 'object' && isEmpty(item) ){ 
+            const {id, ...itemProps} = item;
+            return (
+                <li key = {id} className='list-group-item'>
+                    <PostListItem {...itemProps}
+                    onDelete={()=>onDelete(id)}
+                    onToggleImportant={()=> onToggleImportant(id)}
+                    onToggleLiked={()=>onToggleLiked(id)}
+                    />
+                </li>
+            )
+        //}
     })
+
     function isEmpty(obj) {
         for(let key in obj)
         {
@@ -31,12 +28,11 @@ const PostList = ({posts}) =>{
         }
         return false;
     }
-    return(
-        <ul className="app-list list-group">
-            
-      {elements}
 
-        </ul>
+    return (
+        <ListGroup className="app-list list-group">
+           {elements}
+        </ListGroup>
     )
 }
 
